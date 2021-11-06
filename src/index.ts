@@ -27,7 +27,7 @@ interface Options {
   v1?: boolean;
 }
 
-export default function multiCallBatch(
+export default function multicallBatcher(
   provider: any,
   options: Options | undefined
 ) {
