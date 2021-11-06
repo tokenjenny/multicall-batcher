@@ -37,7 +37,7 @@
   "size-limit": [
     {
       "path": "dist/multicall-batcher.cjs.production.min.js",
-      "limit": "10 KB"
+      "limit": "30 KB"
     },
     {
       "path": "dist/multicall-batcher.esm.js",
@@ -48,10 +48,12 @@
     "@size-limit/preset-small-lib": "^6.0.4",
     "@tsconfig/recommended": "^1.0.1",
     "dts-cli": "^0.19.4",
+    "ganache": "^7.0.0-alpha.1",
     "husky": "^7.0.4",
     "size-limit": "^6.0.4",
     "tslib": "^2.3.1",
-    "typescript": "^4.4.4"
+    "typescript": "^4.4.4",
+    "web3": "^1.6.0"
   },
   "dependencies": {
     "@ethersproject/abi": "^5.5.0"

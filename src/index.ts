@@ -20,10 +20,10 @@ interface Request {
 }
 
 interface Options {
-  batchDebounce: boolean;
-  batchInterval: number;
-  batchMax: number;
   multicallAddress: string;
+  batchDebounce?: boolean;
+  batchInterval?: number;
+  batchMax?: number;
   v1?: boolean;
 }
 
