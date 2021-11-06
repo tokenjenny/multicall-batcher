@@ -40,7 +40,7 @@ export default function multicallBatcher(
   } = options || {};
 
   if (!multicallAddress) {
-    throw new Error("multicall address required");
+    throw new Error('multicall address required');
   }
 
   const _request = provider.request;
@@ -88,8 +88,7 @@ export default function multicallBatcher(
           throw new Error('wrong data returned from multicall');
         }
 
-        let i = 0;
-        for (const { resolvers, args } of requests.values()) {
+        Array.from(requests.values()).forEach(({ resolvers }, i) => {
           resolvers.forEach(({ resolve, reject }) => {
             const [success, bytes] = data[i];
             if (!success) {
@@ -99,15 +98,13 @@ export default function multicallBatcher(
 
             resolve(data[i][1]);
           });
-          i++;
-        }
-      }).catch((e: any) => {
-        let i = 0;
+        });
+      })
+      .catch((e: any) => {
         for (const { resolvers } of requests.values()) {
           resolvers.forEach(({ reject }) => {
             reject(e);
           });
-          i++;
         }
       });
   }
@@ -176,21 +173,22 @@ function encodeV1(requests: Map<string, RequestDetails>) {
   const aggregate = '0x252dba42';
 
   const calls: [string, string][] = [];
-  for (const { args, resolvers } of requests.values()) {
+  for (const { args } of requests.values()) {
     calls.push([args.to, args.data]);
   }
-  return aggregate + defaultAbiCoder
-  .encode(['tuple(address,bytes)[]'], [calls])
-  .slice(2);
+  return (
+    aggregate +
+    defaultAbiCoder.encode(['tuple(address,bytes)[]'], [calls]).slice(2)
+  );
 }
 
 function decodeV1(value: string): [boolean, string][] {
-  const [, data] = defaultAbiCoder.decode(
-    ['uint256', 'bytes[]'],
-    value
-  ) as [block: number, data: string[]];
+  const [, data] = defaultAbiCoder.decode(['uint256', 'bytes[]'], value) as [
+    block: number,
+    data: string[]
+  ];
 
-  return data.map(bytes => [true, bytes]);
+  return data.map((bytes) => [true, bytes]);
 }
 
 function encodeV2(requests: Map<string, RequestDetails>) {
@@ -198,19 +196,21 @@ function encodeV2(requests: Map<string, RequestDetails>) {
   const tryAggregate = '0xbce38bd7';
 
   const calls: [string, string][] = [];
-  for (const { args, resolvers } of requests.values()) {
+  for (const { args } of requests.values()) {
     calls.push([args.to, args.data]);
   }
-  return tryAggregate + defaultAbiCoder
-  .encode(['bool', 'tuple(address,bytes)[]'], [false, calls])
-  .slice(2);
+  return (
+    tryAggregate +
+    defaultAbiCoder
+      .encode(['bool', 'tuple(address,bytes)[]'], [false, calls])
+      .slice(2)
+  );
 }
 
 function decodeV2(value: string): [boolean, string][] {
-  const [data] = defaultAbiCoder.decode(
-    ['tuple(bool,bytes)[]'],
-    value,
-  ) as [data: [boolean, string][]];
+  const [data] = defaultAbiCoder.decode(['tuple(bool,bytes)[]'], value) as [
+    data: [boolean, string][]
+  ];
 
   return data;
 }
