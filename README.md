@@ -1,6 +1,7 @@
 # Multicall Batcher
 
 easy to use [multicall](https://github.com/makerdao/multicall) integration for your dapp.
+supports both multicall and multicall2.
 
 ## Installation
 
@@ -16,7 +17,7 @@ yard add multicall-batcher
 import multicallBatcher from 'multicall-batcher';
 
 function getLibrary(provider) {
-  const library = new Web3Provider(multiCallBatch(provider, {
+  const library = new Web3Provider(multicallBatcher(provider, {
     // batchDebounce: false,
     // batchInterval: 10,
     // batchMax: 0,
@@ -38,4 +39,4 @@ ReactDOM.render(
 
 ## Contract Address
 
-you can find multicall contract addresses for different networks [here](https://github.com/makerdao/multicall#multicall2-contract-addresses).
+you can find multicall contract address for different networks [here](https://github.com/makerdao/multicall#multicall2-contract-addresses).
