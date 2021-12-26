@@ -2,6 +2,13 @@
   "version": "0.2.0",
   "license": "MIT",
   "main": "dist/index.js",
+  "bugs": {
+    "url": "https://github.com/tokenjenny/multicall-batcher/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tokenjenny/multicall-batcher.git"
+  },
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
