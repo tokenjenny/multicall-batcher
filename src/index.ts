@@ -25,6 +25,7 @@ interface Options {
   batchInterval?: number;
   batchMax?: number;
   v1?: boolean;
+  ignoreWithFrom?: boolean;
 }
 
 export default function multicallBatcher(
@@ -37,6 +38,7 @@ export default function multicallBatcher(
     batchMax = 0,
     v1 = false,
     multicallAddress,
+    ignoreWithFrom = false,
   } = options || {};
 
   if (!multicallAddress) {
@@ -129,6 +131,10 @@ export default function multicallBatcher(
     }
 
     const [args, blockNumber] = req.params;
+
+    if (ignoreWithFrom && args.from) {
+      return _request.apply(this, [req]);
+    }
 
     const queueKey = `${blockNumber}-${args.from || ''}`;
 

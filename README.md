@@ -22,17 +22,16 @@ function getLibrary(provider) {
     // batchInterval: 10,
     // batchMax: 0,
     // v1: false,
+    // ignoreWithFrom: false,
     multicallAddress: "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb",
   }))
   return library;
 }
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Web3ReactProvider getLibrary={getLibrary}>
-      <App /> 
-    </Web3ReactProvider>
-  </React.StrictMode>,
+  <Web3ReactProvider getLibrary={getLibrary}>
+    <App />
+  </Web3ReactProvider>,
   document.getElementById('root')
 );
 ```
